@@ -11,7 +11,7 @@ class spotifyAPI {
       *  al => album
       *  ar => artist
       */
-    public $kinds = array('tr','al', 'ar');
+    public $choices = array('tr','al', 'ar');
     /**
       *  the spotify api url 
       */
@@ -20,6 +20,10 @@ class spotifyAPI {
       *  basis of the spotify api url 
       */
     private $baseLink = 'http://ws.spotify.com/search/1/';
+    /**
+      *  the  
+      */
+    private $format = '.json';
     /**
       *  the search query 
       */
@@ -34,17 +38,17 @@ class spotifyAPI {
      */
     
     public function __construct($query) {
-        foreach($this->kinds as $kind){
+        foreach($this->choices as $kind){
             if(substr($query, 0, 2) == $kind){
-                $this->choice = $kind;
+                $choice = $kind;
                 $this->query = substr($query, 2);
             }
             else{
-                $this->choice = 'tr';
+                $choice = 'tr';
                 $this->query = $query;
             }
         }
-        switch($this->choice){
+        switch($choice){
             case "tr":
                 $kind = 'track';
                 break;
@@ -55,6 +59,23 @@ class spotifyAPI {
                 $kind = 'artist';
                 break;
         }
+        $this->choice = $kind;
+        $this->make_url();
+    }
+    
+    /*
+     * creates the url
+     *
+     * function make_url
+     * @param 
+     * @throws 
+     * @return 
+     */
+    
+    private function make_url() {
+        $searchPattern = "?q=".htmlentities($this->query);
+        $searchPattern = str_replace('\ ', '%20', $searchPattern);
+        $this->url = $this->baseLink.$this->kind.$this->format.$searchPattern;
     }
 }
 
