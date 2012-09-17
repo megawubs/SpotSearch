@@ -14,7 +14,7 @@ echo $LINK;</string>
 	<key>escapedollar</key>
 	<true/>
 	<key>escapequery</key>
-	<true/>
+	<false/>
 	<key>escapequerybackquotes</key>
 	<true/>
 	<key>escapequerybrackets</key>
