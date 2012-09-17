@@ -2,12 +2,6 @@
 /**
   *   Based on the search query this file will output the spotify uri.
   */
-
-function pre($array){
-    echo "<pre>";
-    print_r($array);
-    echo "</pre>";
-}
 include_once 'spotifyAPI.php';
 
 
