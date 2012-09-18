@@ -4,7 +4,6 @@
   */
 include_once 'spotifyAPI.php';
 
-
 $query = $argv[1];
 $spotify = new spotifyAPI($query);
 //exit(0);
