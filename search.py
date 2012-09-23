@@ -9,5 +9,6 @@ locatie = locatie[0][3:]
 #initize spotify api
 spot = spotifyAPI(sys.argv[1], locatie)
 #print the result
-pprint(spot.fetchUrl().parseJson().result)
+#pprint(spot.fetchUrl().fetchUrl())
+spot.fetchUrl().fetchUrl().parseJson()
 

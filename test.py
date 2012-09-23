@@ -1,8 +1,21 @@
+# File: toolbar1.py
+
 from Tkinter import *
 
 root = Tk()
 
-w = Label(root, text="hello, world!")
-w.pack()
+def callback():
+    print "called the callback!"
 
-root.mainloop()
+# create a toolbar
+toolbar = Frame(root)
+
+b = Button(toolbar, text="new", width=6, command=callback)
+b.pack(side=LEFT, padx=2, pady=2)
+
+b = Button(toolbar, text="open", width=6, command=callback)
+b.pack(side=LEFT, padx=2, pady=2)
+
+toolbar.pack(side=TOP, fill=X)
+
+mainloop()
