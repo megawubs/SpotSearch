@@ -1,4 +1,4 @@
-from code import spotifyAPI
+from code import spotifyAPI, optionlist
 import sys, locale
 from pprint import pprint
 
@@ -10,5 +10,8 @@ locatie = locatie[0][3:]
 spot = spotifyAPI(sys.argv[1], locatie)
 #print the result
 #pprint(spot.fetchUrl().fetchUrl())
-spot.fetchUrl().fetchUrl().parseJson()
+spot.fetchUrl().parseJson()
+gui = optionlist(spot.result)
+gui.makeList()
+#pprint(spot.result)
 

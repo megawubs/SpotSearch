@@ -4,18 +4,12 @@ from Tkinter import *
 
 root = Tk()
 
-def callback():
-    print "called the callback!"
+Lb1 = Listbox(root)
+Lb1.insert(1, 'Python')
+Lb1.insert(2, 'PHP')
+Lb1.insert(3, 'JavaScript')
+Lb1.insert(4, 'Objective-c')
 
-# create a toolbar
-toolbar = Frame(root)
 
-b = Button(toolbar, text="new", width=6, command=callback)
-b.pack(side=LEFT, padx=2, pady=2)
-
-b = Button(toolbar, text="open", width=6, command=callback)
-b.pack(side=LEFT, padx=2, pady=2)
-
-toolbar.pack(side=TOP, fill=X)
-
-mainloop()
+Lb1.pack()
+root.mainloop()

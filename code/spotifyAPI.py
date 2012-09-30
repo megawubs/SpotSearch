@@ -93,6 +93,7 @@ class spotifyAPI:
             if self.checkAvailability(track['album']['availability']):
                 image = self.getImages(track['href'])
                 tracks.append({'name':track['name'], 'href':track['href']})
+                tracks.append({'name':track['name'], 'href':track['href'], 'image':image})
         self.result = tracks
         
     def parseAlbum(self):
@@ -102,6 +103,7 @@ class spotifyAPI:
             if self.checkAvailability(album['availability']):
                 image = self.getImages(album['href'])
                 albums.append({'name':album['name'], 'href':album['href']})
+                albums.append({'name':album['name'], 'href':album['href'], 'image':image})
         self.result = albums
         
     def parseArtist(self):
@@ -111,6 +113,7 @@ class spotifyAPI:
         for artist in self.jsonObject['artists']:
             image = self.getImages(artist['href'])
             artists.append({'name':artist['name'], 'href':artist['href']})
+            artists.append({'name':artist['name'], 'href':artist['href'], 'image':image})
         self.result = artists
     
     def checkAvailability(self, locations):
@@ -125,15 +128,20 @@ class spotifyAPI:
         print self.spotifyOpenLink
         parser = HTMLParser()
         link = self.spotifyOpenLink
+        link+=href[2]
+        parser = OpenSpotifyParser()
         try:
             response = urllib2.urlopen(link)
             html = response.read()
+            html = html.decode('utf-8')
             parser.feed(html)
             
             #parser.feed(response)
+            result = parser.image
         except urllib2.HTTPError:
             print "no connection to spotify"
             exit(1)
+        return result
         
             
 #class OpenSpotifyParser(HTMLParser):
@@ -157,4 +165,9 @@ class spotifyAPI:
 #            c = unichr(int(name))
 #        print "Num ent  :", c
 #    def handle_decl(self, data):
-#        print "Decl     :", data
+#        print "Decl     :", dataclass OpenSpotifyParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        if tag == 'img':
+            if attrs[0][1] == "cover-art":
+                self.image = attrs[1][1]
+        return self
