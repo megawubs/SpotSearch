@@ -29,7 +29,6 @@ class spotifyAPI:
         self.jsonObject = {}
         #array of the search result
         self.result = {}
-        
         for value in self.choises:
             choise = self.query[0:3]
             if choise == value:
@@ -92,7 +91,6 @@ class spotifyAPI:
         for track in self.jsonObject['tracks']:
             if self.checkAvailability(track['album']['availability']):
                 image = self.getImages(track['href'])
-                tracks.append({'name':track['name'], 'href':track['href']})
                 tracks.append({'name':track['name'], 'href':track['href'], 'image':image})
         self.result = tracks
         
@@ -102,7 +100,6 @@ class spotifyAPI:
         for album in self.jsonObject['albums']:
             if self.checkAvailability(album['availability']):
                 image = self.getImages(album['href'])
-                albums.append({'name':album['name'], 'href':album['href']})
                 albums.append({'name':album['name'], 'href':album['href'], 'image':image})
         self.result = albums
         
@@ -112,7 +109,6 @@ class spotifyAPI:
         artists = []
         for artist in self.jsonObject['artists']:
             image = self.getImages(artist['href'])
-            artists.append({'name':artist['name'], 'href':artist['href']})
             artists.append({'name':artist['name'], 'href':artist['href'], 'image':image})
         self.result = artists
     
@@ -124,9 +120,6 @@ class spotifyAPI:
     
     def getImages(self, href):
         href = href.split(':')
-        self.spotifyOpenLink+=href[2]
-        print self.spotifyOpenLink
-        parser = HTMLParser()
         link = self.spotifyOpenLink
         link+=href[2]
         parser = OpenSpotifyParser()
@@ -135,8 +128,6 @@ class spotifyAPI:
             html = response.read()
             html = html.decode('utf-8')
             parser.feed(html)
-            
-            #parser.feed(response)
             result = parser.image
         except urllib2.HTTPError:
             print "no connection to spotify"
@@ -144,28 +135,7 @@ class spotifyAPI:
         return result
         
             
-#class OpenSpotifyParser(HTMLParser):
-#    def handle_starttag(self, tag, attrs):
-#        print "Start tag:", tag
-#        for attr in attrs:
-#            print "     attr:", attr
-#    def handle_endtag(self, tag):
-#        print "End tag  :", tag
-#    def handle_data(self, data):
-#        print "Data     :", data
-#    def handle_comment(self, data):
-#        print "Comment  :", data
-#    def handle_entityref(self, name):
-#        c = unichr(name2codepoint[name])
-#        print "Named ent:", c
-#    def handle_charref(self, name):
-#        if name.startswith('x'):
-#            c = unichr(int(name[1:], 16))
-#        else:
-#            c = unichr(int(name))
-#        print "Num ent  :", c
-#    def handle_decl(self, data):
-#        print "Decl     :", dataclass OpenSpotifyParser(HTMLParser):
+class OpenSpotifyParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == 'img':
             if attrs[0][1] == "cover-art":
